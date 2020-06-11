@@ -29,11 +29,12 @@ DOM properties incurs the cost of a binding traversal, since element behaviors a
 
 Ordering of property assignment can also be tricky to get right. Similar to the `<img>` issue noted above, assigning
 to the `.src` property of an Image and then immediately assigning to the `.crossOrigin` property will cancel the
-already-started request and re-issue it with updated CORS constraints. Similar ordering concerns are present for many
-DOM properties - setting an Node's contents via `.data` or `.textContent`, needs to happen prior to setting properties
-that refer to that content like `.datalist` and `.selected`. The behavior of attributes is more manageable in this
-regard, since attribute changes are always batched. Synchronous code that modifies attributes behaves the same
-regardless of the order in which they are set, even across multiple elements.
+already-started request and re-issue it with updated CORS constraints (note: this might be a browser bug).
+
+Similar ordering concerns are present for many DOM properties - setting an Node's contents via `.data` or `.textContent`,
+needs to happen prior to setting properties that refer to that content like `.datalist` and `.selected`. The behavior of
+attributes can sometimes be more manageable in this regard, since attribute changes are batched. Synchronous code that
+modifies attributes generally behaves the same regardless of the order in which they are set, even across multiple elements.
 
 ## API Sketch
 
